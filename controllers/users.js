@@ -24,6 +24,24 @@ export const signIn = async (req, res) => {
   }
 };
 
+export const googleSignIn = async (req, res) => {
+  const { accessToken } = req.body;
+  try {
+    let resp = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+      method: "get",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    let userProfile = await resp.json();
+    userProfile._id = userProfile.sub;
+
+    const token = jwt.sign({ email: userProfile.email, id: userProfile.sub }, SECRET, { expiresIn: "1h" });
+    res.status(200).json({ userProfile, token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
 export const signUp = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
 

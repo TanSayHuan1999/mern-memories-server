@@ -22,5 +22,7 @@ const postSchema = mongoose.Schema({
   },
 });
 
-const PostMessage = mongoose.model("PostMessage", postSchema);
+const targetDb = mongoose.connection.useDb("DB1");
+// const targetDb = mongoose.connection.useDb("test");
+const PostMessage = targetDb.model("PostMessage", postSchema);
 export default PostMessage;
