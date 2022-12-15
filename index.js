@@ -20,7 +20,7 @@ app.use("/posts", postsRoutes);
 app.use("/users", usersRoutes);
 
 app.get("/", (req, res) => {
-  res.send("APP IS RUNNING Hahaha!");
+  res.send("APP IS RUNNING Hahaha Hohoho!");
 });
 
 // const CONNECTION_URL = "mongodb+srv://sayhuan99:123123qweqwe@cluster-mern-memories.v9vp5dk.mongodb.net/?retryWrites=true&w=majority";
