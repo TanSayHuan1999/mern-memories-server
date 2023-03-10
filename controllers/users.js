@@ -1,3 +1,4 @@
+import axios from "axios";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
@@ -27,11 +28,15 @@ export const signIn = async (req, res) => {
 export const googleSignIn = async (req, res) => {
   const { accessToken } = req.body;
   try {
-    let resp = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-      method: "get",
+    // let resp = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+    //   method: "get",
+    //   headers: { Authorization: `Bearer ${accessToken}` },
+    // });
+    // let userProfile = await resp.json();
+    // userProfile._id = userProfile.sub;
+    let userProfile = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    let userProfile = await resp.json();
     userProfile._id = userProfile.sub;
 
     const token = jwt.sign({ email: userProfile.email, id: userProfile.sub }, SECRET, { expiresIn: "1h" });
