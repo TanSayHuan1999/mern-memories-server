@@ -4,7 +4,7 @@ const auth = async (req, res, next) => {
   try {
     const { authorization, signinmethod } = req.headers;
 
-    const token = authorization.split(" ")[1];
+    const token = authorization?.split(" ")?.[1];
     let decodedData;
 
     if (token) {
